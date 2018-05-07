@@ -30,11 +30,11 @@ patterns: [
     match: '\\b(if|else|return|break)'
   }
 
-    {
-      comment: 'Refers to list types in jen.'
-      name: 'support.type.jen'
-      match: '\\blist [a-z]*'
-    }
+  {
+    comment: 'Refers to list types in jen.'
+    name: 'support.type.jen'
+    match: '\\blist [a-z]*'
+  }
 
   {
     comment: 'Refers to built-in types in jen.'
@@ -55,13 +55,32 @@ patterns: [
   }
 
   {
-    begin: '//?'
+    begin: '(//?)'
     beginCaptures:
-      0:
+      1:
         name: 'keyword.operator.ternary.jen'
-    end: ':'
+    end: '(:)'
     endCaptures:
-      0:
+      1:
         name: 'keyword.operator.ternary.jen'
+  }
+
+  {
+    begin: '([\\w]+)\\s*(?=\\()'
+    beginCaptures:
+      1:
+        patterns: [
+          {
+            match: '[a-zA-Z_][\\w]*'
+            name: 'entity.name.function.jen'
+          }
+
+          {
+            match: '\\d[\\w]*'
+            name: 'invalid.illegal.identifier.jen'
+          }
+        ]
+    end: '(?<=\\))'
+    name: 'meta.function-call.jen'
   }
 ]
